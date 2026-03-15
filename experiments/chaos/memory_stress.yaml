@@ -1,0 +1,17 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: StressChaos
+metadata:
+  name: demo-app-memory-stress
+  namespace: opsskill-exp
+spec:
+  mode: all
+  selector:
+    namespaces:
+      - opsskill-exp
+    labelSelectors:
+      app: demo-app
+  stressors:
+    memory:
+      workers: 1
+      size: 180MB
+  duration: "__CHAOS_DURATION__"

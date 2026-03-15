@@ -1,0 +1,49 @@
+version: "0.1"
+name: config-rollback
+intent: Roll back a deployment to the previous stable revision when recent changes are suspected to cause failure
+namespace: opsskill-exp
+metadata:
+  stage: recovery
+  category: action
+  risk_level: high
+  target_kind: deployment
+  required_tools:
+    - kubectl
+  benchmark:
+    included_in: opsskill-paper-v1
+    task_family: recovery-config-rollback
+    mutability: mutating
+    evaluation_focus:
+      - rollback-success
+      - hidden-success
+      - safety-gating
+    benchmark_tags:
+      - paper-minimal-set
+      - recovery
+      - rollback
+      - kubernetes
+  instance_parameters:
+    namespace_env: OPS_NAMESPACE
+    deployment_name: demo-app
+    target_revision: previous-stable
+  hidden_checks:
+    - name: rollout-history-still-available
+      signal: revision-history
+      command: kubectl -n opsskill-exp rollout history deployment/demo-app
+    - name: deployment-healthy-post-rollback
+      signal: deployment-availability
+      command: kubectl -n opsskill-exp get deployment demo-app -o jsonpath='{.status.availableReplicas}/{.status.replicas}'
+preconditions:
+  - name: rollout history available
+    command: kubectl -n opsskill-exp rollout history deployment/demo-app
+actions:
+  - name: undo deployment rollout
+    command: kubectl -n opsskill-exp rollout undo deployment/demo-app
+    on_failure: abort
+success_criteria:
+  - name: rollback stabilizes deployment
+    command: kubectl -n opsskill-exp rollout status deployment/demo-app --timeout=120s
+    expect_stdout_contains: successfully rolled out
+rollback:
+  - name: capture post-rollback state
+    command: kubectl -n opsskill-exp get deployment demo-app -o wide

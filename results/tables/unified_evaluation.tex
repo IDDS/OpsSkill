@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering
+\caption{Unified scoring formula applied to all methods. $\text{Score}_{U} = 0.20 P + 0.20 A + 0.25 V_{vis} + 0.25 V_{hid} - 0.10 R$. Components scoring 0 indicate the method does not implement that capability.}
+\label{tab:unified-eval}
+\small
+\begin{tabular}{lccccccc}
+\toprule
+\textbf{Method} & $P$ & $A$ & $V_{vis}$ & $V_{hid}$ & $R$ & \textbf{Score}$_{U}$ & \textbf{Score}$_{orig}$ \\
+\midrule
+B1-Direct & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 20\% & 25\% \\
+B2-ReAct & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 20\% & 40\% \\
+B3-Reflexion & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 20\% & 40\% \\
+B4-Template & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 20\% & 25\% \\
+\textbf{B5-OpsSkill} & 1.00 & 1.00 & 1.00 & 1.00 & 0.00 & 90\% & 90\% \\
+A1-no-IR & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 20\% & 25\% \\
+A2-no-HidV & 1.00 & 1.00 & 0.00 & 0.00 & 0.00 & 40\% & 60\% \\
+A3-no-PG & 1.00 & 1.00 & 1.00 & 1.00 & 0.00 & 90\% & 89\% \\
+\bottomrule
+\end{tabular}
+\end{table}

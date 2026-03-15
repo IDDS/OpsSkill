@@ -1,0 +1,14 @@
+name: cpu-detect-anomaly
+intent: Detect abnormal pod restart or readiness signals under CPU pressure
+fault_domain: cpu
+task_family: T1
+task_type: read-only
+namespace: opsskill-exp
+workload: demo-app
+expected_outcome: Pod health summary showing CPU stress indicators
+opsskill_skill: skills/detection/metric_anomaly_detection.yaml
+hidden_checks:
+  - name: restart-count-captured
+    command: "kubectl -n opsskill-exp get pods -o jsonpath='{range .items[*]}{.metadata.name}={range .status.containerStatuses[*]}{.restartCount} {end}\\n{end}'"
+  - name: readiness-signal-present
+    command: "kubectl -n opsskill-exp get pods -o jsonpath='{range .items[*]}{.metadata.name}={.status.phase}\\n{end}'"

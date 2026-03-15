@@ -1,0 +1,6 @@
+jump_host: openstack@222.200.180.102
+target_host: ubuntu@10.10.3.110
+namespace: opsskill-sandbox
+ssh_options:
+  - -o
+  - StrictHostKeyChecking=no

@@ -1,0 +1,14 @@
+name: memory-detect-event-burst
+intent: Detect abnormal bursts of Kubernetes warning events caused by memory pressure
+fault_domain: memory
+task_family: T1
+task_type: read-only
+namespace: opsskill-exp
+workload: demo-app
+expected_outcome: Warning events list revealing OOMKilled or memory pressure signals
+opsskill_skill: skills/detection/k8s_event_burst_detection.yaml
+hidden_checks:
+  - name: warning-events-visible
+    command: "kubectl -n opsskill-exp get events --field-selector type=Warning --no-headers"
+  - name: affected-objects-identifiable
+    command: "kubectl -n opsskill-exp get events --field-selector type=Warning -o jsonpath='{range .items[*]}{.involvedObject.kind}/{.involvedObject.name}\\n{end}'"

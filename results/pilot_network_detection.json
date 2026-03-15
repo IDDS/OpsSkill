@@ -1,0 +1,42 @@
+{
+  "skill_name": "config-change-correlation",
+  "preconditions": [
+    {
+      "name": "deployments visible",
+      "passed": true,
+      "detail": "exit=0",
+      "raw": {
+        "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get deployments",
+        "returncode": 0,
+        "stdout": "NAME       READY   UP-TO-DATE   AVAILABLE   AGE\ndemo-app   1/1     1            1           9h",
+        "stderr": ""
+      },
+      "agent_rationale": "Heuristic verifier observed exit=0.",
+      "agent_verdict": "pass"
+    }
+  ],
+  "actions": [
+    {
+      "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get deployments -o jsonpath='{range .items[*]}{.metadata.name}{\"\\t\"}{.metadata.annotations.deployment\\.kubernetes\\.io/revision}{\"\\t\"}{.metadata.creationTimestamp}{\"\\n\"}{end}'",
+      "returncode": 0,
+      "stdout": "demo-app\t5\t2026-03-14T15:38:43Z",
+      "stderr": ""
+    }
+  ],
+  "success_criteria": [
+    {
+      "name": "deployment revision summary collected",
+      "passed": true,
+      "detail": "exit=0",
+      "raw": {
+        "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get deployments",
+        "returncode": 0,
+        "stdout": "NAME       READY   UP-TO-DATE   AVAILABLE   AGE\ndemo-app   1/1     1            1           9h",
+        "stderr": ""
+      },
+      "agent_rationale": "Heuristic verifier observed exit=0.",
+      "agent_verdict": "pass"
+    }
+  ],
+  "rollback": []
+}

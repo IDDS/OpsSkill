@@ -1,0 +1,42 @@
+{
+  "skill_name": "check-namespace-access",
+  "preconditions": [
+    {
+      "name": "kubectl can reach cluster",
+      "passed": true,
+      "detail": "exit=0",
+      "raw": {
+        "command": "ssh -J openstack@222.200.180.102 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-sandbox && kubectl get namespace default",
+        "returncode": 0,
+        "stdout": "NAME      STATUS   AGE\ndefault   Active   101d",
+        "stderr": ""
+      },
+      "agent_rationale": "Heuristic verifier observed exit=0.",
+      "agent_verdict": "pass"
+    }
+  ],
+  "actions": [
+    {
+      "command": "ssh -J openstack@222.200.180.102 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-sandbox && kubectl -n default get pods",
+      "returncode": 0,
+      "stdout": "NAME                    READY   STATUS      RESTARTS   AGE\nsocial-init-job-l5mpj   0/1     Completed   0          15d\nwrk2-compose-vgzcj      0/1     Completed   0          15d\nwrk2-job-4ktbk          0/1     Completed   0          3d2h\nwrk2-read-home-r5bdn    0/1     Completed   0          15d\nwrk2-read-user-4rwpt    0/1     Completed   0          15d",
+      "stderr": ""
+    }
+  ],
+  "success_criteria": [
+    {
+      "name": "namespace still visible",
+      "passed": true,
+      "detail": "stdout contains 'default'",
+      "raw": {
+        "command": "ssh -J openstack@222.200.180.102 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-sandbox && kubectl get namespace default",
+        "returncode": 0,
+        "stdout": "NAME      STATUS   AGE\ndefault   Active   101d",
+        "stderr": ""
+      },
+      "agent_rationale": "Heuristic verifier observed stdout contains 'default'.",
+      "agent_verdict": "pass"
+    }
+  ],
+  "rollback": []
+}

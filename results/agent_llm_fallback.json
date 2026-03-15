@@ -1,0 +1,103 @@
+{
+  "task_summary": "recover-demo-app recover demo-app after transient failure rollout restart deployment to recover availability demo-app opsskill-sandbox medium",
+  "stages": [
+    "detection",
+    "diagnosis"
+  ],
+  "planner_requested": "llm",
+  "planner_used": "heuristic",
+  "planner_fallback_reason": "Missing API key in env var OPENAI_API_KEY",
+  "steps": [
+    {
+      "stage": "detection",
+      "skill_path": "skills/detection/config_change_correlation.yaml",
+      "skill_name": "config-change-correlation",
+      "selected_score": 6.0,
+      "executed": true,
+      "report": {
+        "skill_name": "config-change-correlation",
+        "preconditions": [
+          {
+            "name": "deployments visible",
+            "passed": true,
+            "detail": "exit=0",
+            "raw": {
+              "command": "ssh -J openstack@222.200.180.102 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get deployments",
+              "returncode": 0,
+              "stdout": "NAME       READY   UP-TO-DATE   AVAILABLE   AGE\ndemo-app   1/1     1            1           30m",
+              "stderr": ""
+            }
+          }
+        ],
+        "actions": [
+          {
+            "command": "ssh -J openstack@222.200.180.102 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get deployments -o jsonpath='{range .items[*]}{.metadata.name}{\"\\t\"}{.metadata.annotations.deployment\\.kubernetes\\.io/revision}{\"\\t\"}{.metadata.creationTimestamp}{\"\\n\"}{end}'",
+            "returncode": 0,
+            "stdout": "demo-app\t3\t2026-03-14T15:38:43Z",
+            "stderr": ""
+          }
+        ],
+        "success_criteria": [
+          {
+            "name": "deployment revision summary collected",
+            "passed": true,
+            "detail": "exit=0",
+            "raw": {
+              "command": "ssh -J openstack@222.200.180.102 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get deployments",
+              "returncode": 0,
+              "stdout": "NAME       READY   UP-TO-DATE   AVAILABLE   AGE\ndemo-app   1/1     1            1           30m",
+              "stderr": ""
+            }
+          }
+        ],
+        "rollback": []
+      }
+    },
+    {
+      "stage": "diagnosis",
+      "skill_path": "skills/diagnosis/pod_deployment_state_diagnosis.yaml",
+      "skill_name": "pod-deployment-state-diagnosis",
+      "selected_score": 8.0,
+      "executed": true,
+      "report": {
+        "skill_name": "pod-deployment-state-diagnosis",
+        "preconditions": [
+          {
+            "name": "workloads visible",
+            "passed": true,
+            "detail": "exit=0",
+            "raw": {
+              "command": "ssh -J openstack@222.200.180.102 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get deployments,pods",
+              "returncode": 0,
+              "stdout": "NAME                       READY   UP-TO-DATE   AVAILABLE   AGE\ndeployment.apps/demo-app   1/1     1            1           30m\n\nNAME                            READY   STATUS    RESTARTS   AGE\npod/demo-app-755747b955-2jszw   1/1     Running   0          14m",
+              "stderr": ""
+            }
+          }
+        ],
+        "actions": [
+          {
+            "command": "ssh -J openstack@222.200.180.102 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} describe deployments,pods",
+            "returncode": 0,
+            "stdout": "Name:                   demo-app\nNamespace:              opsskill-exp\nCreationTimestamp:      Sat, 14 Mar 2026 15:38:43 +0000\nLabels:                 app=demo-app\nAnnotations:            deployment.kubernetes.io/revision: 3\nSelector:               app=demo-app\nReplicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable\nStrategyType:           RollingUpdate\nMinReadySeconds:        0\nRollingUpdateStrategy:  25% max unavailable, 25% max surge\nPod Template:\n  Labels:       app=demo-app\n  Annotations:  kubectl.kubernetes.io/restartedAt: 2026-03-14T15:54:41Z\n  Containers:\n   demo-app:\n    Image:      nginx:1.27-alpine\n    Port:       80/TCP\n    Host Port:  0/TCP\n    Limits:\n      cpu:     500m\n      memory:  256Mi\n    Requests:\n      cpu:         100m\n      memory:      128Mi\n    Liveness:      http-get http://:80/ delay=10s timeout=1s period=10s #success=1 #failure=3\n    Readiness:     http-get http://:80/ delay=3s timeout=1s period=5s #success=1 #failure=3\n    Environment:   <none>\n    Mounts:        <none>\n  Volumes:         <none>\n  Node-Selectors:  kubernetes.io/hostname=lsy-2\n  Tolerations:     <none>\nConditions:\n  Type           Status  Reason\n  ----           ------  ------\n  Available      True    MinimumReplicasAvailable\n  Progressing    True    NewReplicaSetAvailable\nOldReplicaSets:  demo-app-c98f7b96 (0/0 replicas created), demo-app-765797fc8d (0/0 replicas created)\nNewReplicaSet:   demo-app-755747b955 (1/1 replicas created)\nEvents:\n  Type    Reason             Age   From                   Message\n  ----    ------             ----  ----                   -------\n  Normal  ScalingReplicaSet  30m   deployment-controller  Scaled up replica set demo-app-c98f7b96 from 0 to 1\n  Normal  ScalingReplicaSet  29m   deployment-controller  Scaled up replica set demo-app-765797fc8d from 0 to 1\n  Normal  ScalingReplicaSet  28m   deployment-controller  Scaled down replica set demo-app-c98f7b96 from 1 to 0\n  Normal  ScalingReplicaSet  14m   deployment-controller  Scaled up replica set demo-app-755747b955 from 0 to 1\n  Normal  ScalingReplicaSet  14m   deployment-controller  Scaled down replica set demo-app-765797fc8d from 1 to 0\n\n\nName:             demo-app-755747b955-2jszw\nNamespace:        opsskill-exp\nPriority:         0\nService Account:  default\nNode:             lsy-2/10.10.2.199\nStart Time:       Sat, 14 Mar 2026 15:54:41 +0000\nLabels:           app=demo-app\n                  pod-template-hash=755747b955\nAnnotations:      kubectl.kubernetes.io/restartedAt: 2026-03-14T15:54:41Z\nStatus:           Running\nIP:               10.244.2.153\nIPs:\n  IP:           10.244.2.153\nControlled By:  ReplicaSet/demo-app-755747b955\nContainers:\n  demo-app:\n    Container ID:   docker://4ae4c8245a1335e766aa9479f34f2de96aefbba55b6d294509e68421ec478169\n    Image:          nginx:1.27-alpine\n    Image ID:       docker-pullable://nginx@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10\n    Port:           80/TCP\n    Host Port:      0/TCP\n    State:          Running\n      Started:      Sat, 14 Mar 2026 15:54:41 +0000\n    Ready:          True\n    Restart Count:  0\n    Limits:\n      cpu:     500m\n      memory:  256Mi\n    Requests:\n      cpu:        100m\n      memory:     128Mi\n    Liveness:     http-get http://:80/ delay=10s timeout=1s period=10s #success=1 #failure=3\n    Readiness:    http-get http://:80/ delay=3s timeout=1s period=5s #success=1 #failure=3\n    Environment:  <none>\n    Mounts:\n      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-rn7gm (ro)\nConditions:\n  Type                        Status\n  PodReadyToStartContainers   True \n  Initialized                 True \n  Ready                       True \n  ContainersReady             True \n  PodScheduled                True \nVolumes:\n  kube-api-access-rn7gm:\n    Type:                    Projected (a volume that contains injected data from multiple sources)\n    TokenExpirationSeconds:  3607\n    ConfigMapName:           kube-root-ca.crt\n    Optional:                false\n    DownwardAPI:             true\nQoS Class:                   Burstable\nNode-Selectors:              kubernetes.io/hostname=lsy-2\nTolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s\n                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s\nEvents:\n  Type    Reason     Age   From               Message\n  ----    ------     ----  ----               -------\n  Normal  Scheduled  14m   default-scheduler  Successfully assigned opsskill-exp/demo-app-755747b955-2jszw to lsy-2\n  Normal  Pulled     14m   kubelet            Container image \"nginx:1.27-alpine\" already present on machine\n  Normal  Created    14m   kubelet            Created container: demo-app\n  Normal  Started    14m   kubelet            Started container demo-app",
+            "stderr": ""
+          }
+        ],
+        "success_criteria": [
+          {
+            "name": "detailed state collected",
+            "passed": true,
+            "detail": "exit=0",
+            "raw": {
+              "command": "ssh -J openstack@222.200.180.102 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get pods",
+              "returncode": 0,
+              "stdout": "NAME                        READY   STATUS    RESTARTS   AGE\ndemo-app-755747b955-2jszw   1/1     Running   0          14m",
+              "stderr": ""
+            }
+          }
+        ],
+        "rollback": []
+      }
+    }
+  ],
+  "skipped_skills": []
+}

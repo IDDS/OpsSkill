@@ -1,0 +1,42 @@
+{
+  "skill_name": "deployment-rollout-restart",
+  "preconditions": [
+    {
+      "name": "demo deployment exists",
+      "passed": true,
+      "detail": "exit=0",
+      "raw": {
+        "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get deployment demo-app",
+        "returncode": 0,
+        "stdout": "NAME       READY   UP-TO-DATE   AVAILABLE   AGE\ndemo-app   1/1     1            1           9h",
+        "stderr": ""
+      },
+      "agent_rationale": "Heuristic verifier observed exit=0.",
+      "agent_verdict": "pass"
+    }
+  ],
+  "actions": [
+    {
+      "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} rollout restart deployment/demo-app",
+      "returncode": 0,
+      "stdout": "deployment.apps/demo-app restarted",
+      "stderr": ""
+    }
+  ],
+  "success_criteria": [
+    {
+      "name": "rollout completes",
+      "passed": true,
+      "detail": "stdout contains 'successfully rolled out'",
+      "raw": {
+        "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} rollout status deployment/demo-app --timeout=120s",
+        "returncode": 0,
+        "stdout": "Waiting for deployment \"demo-app\" rollout to finish: 1 old replicas are pending termination...\nWaiting for deployment \"demo-app\" rollout to finish: 1 old replicas are pending termination...\ndeployment \"demo-app\" successfully rolled out",
+        "stderr": ""
+      },
+      "agent_rationale": "Heuristic verifier observed stdout contains 'successfully rolled out'.",
+      "agent_verdict": "pass"
+    }
+  ],
+  "rollback": []
+}

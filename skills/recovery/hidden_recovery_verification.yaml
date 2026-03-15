@@ -1,0 +1,48 @@
+version: "0.1"
+name: hidden-recovery-verification
+intent: Verify post-recovery health using workload readiness and service visibility checks beyond the immediate action result
+namespace: opsskill-exp
+metadata:
+  stage: recovery
+  category: observation
+  risk_level: none
+  required_tools:
+    - kubectl
+  paper_role: hidden-verification-skill
+  benchmark:
+    included_in: opsskill-paper-v1
+    task_family: recovery-hidden-verification
+    mutability: read-only
+    evaluation_focus:
+      - hidden-success
+      - false-positive-gap
+      - readiness-quality
+    benchmark_tags:
+      - paper-minimal-set
+      - recovery
+      - hidden-verification
+      - kubernetes
+  instance_parameters:
+    namespace_env: OPS_NAMESPACE
+    target_kinds:
+      - deployment
+      - pod
+      - service
+  hidden_checks:
+    - name: deployment-availability-summary
+      signal: deployment-availability
+      command: kubectl -n opsskill-exp get deployments -o jsonpath='{range .items[*]}{.metadata.name}{"="}{.status.availableReplicas}{"/"}{.status.replicas}{"\n"}{end}'
+    - name: service-visibility-summary
+      signal: service-visibility
+      command: kubectl -n opsskill-exp get svc --no-headers
+preconditions:
+  - name: namespace accessible
+    command: kubectl get namespace opsskill-exp
+actions:
+  - name: collect deployment and pod readiness view
+    command: kubectl -n opsskill-exp get deployments,pods,svc -o wide
+    on_failure: abort
+success_criteria:
+  - name: all deployments available
+    command: kubectl -n opsskill-exp get deployments -o jsonpath='{range .items[*]}{.metadata.name}{"="}{.status.availableReplicas}{"/"}{.status.replicas}{"\n"}{end}'
+rollback: []

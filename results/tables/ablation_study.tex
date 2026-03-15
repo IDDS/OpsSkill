@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\caption{Ablation study: contribution of each OpsSkill component.}
+\label{tab:ablation}
+\small
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Variant} & \textbf{TSR} & \textbf{HVP} & \textbf{UAR} & \textbf{Score} & $\Delta$\textbf{Score} \\
+\midrule
+w/o Typed IR & 100\% & 100\% & 0.00 & 25\% & -65\% \\
+w/o Hidden Verif. & 100\% & 100\% & 0.00 & 60\% & -30\% \\
+w/o Policy Gate & 100\% & 100\% & 0.12 & 89\% & -1\% \\
+\textbf{OpsSkill} & 100\% & 100\% & 0.00 & 90\% & +0\% \\
+\bottomrule
+\end{tabular}
+\end{table}

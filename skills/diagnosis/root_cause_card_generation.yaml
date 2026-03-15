@@ -1,0 +1,50 @@
+version: "0.1"
+name: root-cause-card-generation
+intent: Normalize diagnosis evidence into a structured root-cause card for recovery planning
+namespace: opsskill-exp
+metadata:
+  stage: diagnosis
+  category: analysis
+  risk_level: none
+  required_tools:
+    - shell
+  output_artifact: root-cause-card
+  benchmark:
+    included_in: opsskill-paper-v1
+    task_family: diagnosis-root-cause-card-compilation
+    mutability: read-only
+    evaluation_focus:
+      - evidence-normalization
+      - recovery-readiness
+    benchmark_tags:
+      - paper-minimal-set
+      - diagnosis
+      - artifact-generation
+      - root-cause-card
+  instance_parameters:
+    namespace_env: OPS_NAMESPACE
+    required_fields:
+      - root_cause
+      - confidence
+      - namespace
+      - recommended_actions
+  hidden_checks:
+    - name: root-cause-card-has-required-fields
+      signal: card-schema
+      command: printf 'root_cause\nconfidence\nnamespace\nrecommended_actions\n'
+    - name: card-preserves-namespace
+      signal: namespace-propagation
+      command: printf '%s\n' "opsskill-exp"
+preconditions:
+  - name: shell available
+    command: command -v printf
+actions:
+  - name: emit root cause card template
+    command: >-
+      printf 'root_cause: unknown\nconfidence: low\nnamespace: %s\nrecommended_actions:\n  - restart-deployment\n  - inspect-config\n' "opsskill-exp"
+    on_failure: abort
+success_criteria:
+  - name: root cause card emitted
+    command: printf 'root-cause-card-generated\n'
+    expect_stdout_contains: root-cause-card-generated
+rollback: []

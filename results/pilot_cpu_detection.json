@@ -1,0 +1,42 @@
+{
+  "skill_name": "metric-anomaly-detection",
+  "preconditions": [
+    {
+      "name": "namespace accessible",
+      "passed": true,
+      "detail": "exit=0",
+      "raw": {
+        "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl get namespace ${OPS_NAMESPACE}",
+        "returncode": 0,
+        "stdout": "NAME           STATUS   AGE\nopsskill-exp   Active   9h",
+        "stderr": ""
+      },
+      "agent_rationale": "Heuristic verifier observed exit=0.",
+      "agent_verdict": "pass"
+    }
+  ],
+  "actions": [
+    {
+      "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get pods -o custom-columns=NAME:.metadata.name,READY:.status.containerStatuses[*].ready,RESTARTS:.status.containerStatuses[*].restartCount,PHASE:.status.phase",
+      "returncode": 0,
+      "stdout": "NAME                       READY   RESTARTS   PHASE\ndemo-app-969f46449-j8xlw   true    0          Running",
+      "stderr": ""
+    }
+  ],
+  "success_criteria": [
+    {
+      "name": "pod summary collected",
+      "passed": true,
+      "detail": "exit=0",
+      "raw": {
+        "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get pods --no-headers",
+        "returncode": 0,
+        "stdout": "demo-app-969f46449-j8xlw   1/1   Running   0     8h",
+        "stderr": ""
+      },
+      "agent_rationale": "Heuristic verifier observed exit=0.",
+      "agent_verdict": "pass"
+    }
+  ],
+  "rollback": []
+}

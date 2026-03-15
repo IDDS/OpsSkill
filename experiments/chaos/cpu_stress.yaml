@@ -1,0 +1,17 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: StressChaos
+metadata:
+  name: demo-app-cpu-stress
+  namespace: opsskill-exp
+spec:
+  mode: all
+  selector:
+    namespaces:
+      - opsskill-exp
+    labelSelectors:
+      app: demo-app
+  stressors:
+    cpu:
+      workers: 1
+      load: 80
+  duration: "__CHAOS_DURATION__"

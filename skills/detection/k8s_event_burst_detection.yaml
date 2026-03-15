@@ -1,0 +1,45 @@
+version: "0.1"
+name: k8s-event-burst-detection
+intent: Detect abnormal bursts of Kubernetes warning events in the target namespace
+namespace: opsskill-exp
+metadata:
+  stage: detection
+  category: observation
+  risk_level: none
+  required_tools:
+    - kubectl
+  paper_role: event-detection-skill
+  benchmark:
+    included_in: opsskill-paper-v1
+    task_family: detection-event-screening
+    mutability: read-only
+    evaluation_focus:
+      - event-signal-recall
+      - namespace-portability
+    benchmark_tags:
+      - paper-minimal-set
+      - detection
+      - events
+      - kubernetes
+  instance_parameters:
+    namespace_env: OPS_NAMESPACE
+    event_type: Warning
+    sort_key: .lastTimestamp
+  hidden_checks:
+    - name: warning-events-visible
+      signal: k8s-warning-events
+      command: kubectl -n opsskill-exp get events --field-selector type=Warning --no-headers
+    - name: affected-objects-identifiable
+      signal: event-involved-objects
+      command: kubectl -n opsskill-exp get events --field-selector type=Warning -o jsonpath='{range .items[*]}{.involvedObject.kind}{"/"}{.involvedObject.name}{"\n"}{end}'
+preconditions:
+  - name: namespace accessible
+    command: kubectl get namespace opsskill-exp
+actions:
+  - name: collect recent warning events
+    command: kubectl -n opsskill-exp get events --field-selector type=Warning --sort-by=.lastTimestamp
+    on_failure: abort
+success_criteria:
+  - name: event query succeeds
+    command: kubectl -n opsskill-exp get events --field-selector type=Warning
+rollback: []

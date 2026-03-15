@@ -1,0 +1,50 @@
+version: '0.1'
+name: config-change-correlation
+intent: Correlate workload health with recent rollout-related configuration or revision
+  changes
+namespace: opsskill-exp
+metadata:
+  stage: detection
+  category: observation
+  risk_level: low
+  required_tools:
+  - kubectl
+  paper_role: change-correlation-skill
+  benchmark:
+    included_in: opsskill-paper-v1
+    task_family: detection-change-correlation
+    mutability: read-only
+    evaluation_focus:
+    - change-evidence-quality
+    - false-positive-control
+    benchmark_tags:
+    - paper-minimal-set
+    - detection
+    - change-analysis
+    - kubernetes
+  instance_parameters:
+    namespace_env: OPS_NAMESPACE
+    target_kind: deployment
+    revision_annotation: deployment.kubernetes.io/revision
+  hidden_checks:
+  - name: revision-annotation-visible
+    signal: rollout-revision
+    command: kubectl -n opsskill-exp get deployments -o jsonpath='{range .items[*]}{.metadata.name}{"="}{.metadata.annotations.deployment\.kubernetes\.io/revision}{"\n"}{end}'
+  - name: deployment-timestamps-visible
+    signal: deployment-created-at
+    command: kubectl -n opsskill-exp get deployments -o jsonpath='{range .items[*]}{.metadata.name}{"="}{.metadata.creationTimestamp}{"\n"}{end}'
+preconditions:
+- name: deployments visible
+  command: kubectl -n opsskill-exp get deployments
+  expect_exit_code: 0
+- name: verify-crd-available
+  command: kubectl get crd --no-headers | head -5
+actions:
+- name: inspect rollout revisions and annotations
+  command: kubectl -n opsskill-exp get deployments -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.annotations.deployment\.kubernetes\.io/revision}{"\t"}{.metadata.creationTimestamp}{"\n"}{end}'
+  on_failure: abort
+success_criteria:
+- name: deployment revision summary collected
+  command: kubectl -n opsskill-exp get deployments
+  expect_exit_code: 0
+rollback: []

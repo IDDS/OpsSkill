@@ -1,0 +1,51 @@
+version: '0.1'
+name: metric-anomaly-detection
+intent: Detect abnormal pod restart or readiness signals in the target namespace as
+  a lightweight metric proxy
+namespace: opsskill-exp
+metadata:
+  stage: detection
+  category: observation
+  risk_level: none
+  required_tools:
+  - kubectl
+  paper_role: baseline-detection-skill
+  benchmark:
+    included_in: opsskill-paper-v1
+    task_family: detection-metric-screening
+    mutability: read-only
+    evaluation_focus:
+    - anomaly-evidence-quality
+    - hidden-verification-gap
+    benchmark_tags:
+    - paper-minimal-set
+    - detection
+    - kubernetes
+    - read-only
+  instance_parameters:
+    namespace_env: OPS_NAMESPACE
+    workload_selector: all-pods
+    time_window: immediate-snapshot
+  hidden_checks:
+  - name: restart-count-signal-present
+    signal: pod-restart-count
+    command: kubectl -n opsskill-exp get pods -o jsonpath='{range .items[*]}{.metadata.name}{"="}{range
+      .status.containerStatuses[*]}{.restartCount}{" "}{end}{"\n"}{end}'
+  - name: readiness-signal-present
+    signal: pod-readiness
+    command: kubectl -n opsskill-exp get pods -o jsonpath='{range .items[*]}{.metadata.name}{"="}{.status.phase}{"\n"}{end}'
+preconditions:
+- name: namespace accessible
+  command: kubectl get namespace opsskill-exp
+  expect_exit_code: 0
+- name: verify-rbac-permissions
+  command: kubectl auth can-i list pods -n opsskill-exp
+actions:
+- name: inspect pod restart and readiness summary
+  command: kubectl -n opsskill-exp get pods -o custom-columns=NAME:.metadata.name,READY:.status.containerStatuses[*].ready,RESTARTS:.status.containerStatuses[*].restartCount,PHASE:.status.phase
+  on_failure: abort
+success_criteria:
+- name: pod summary collected
+  command: kubectl -n opsskill-exp get pods --no-headers
+  expect_exit_code: 0
+rollback: []

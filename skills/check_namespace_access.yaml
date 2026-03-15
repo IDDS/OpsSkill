@@ -1,0 +1,19 @@
+version: "0.1"
+name: check-namespace-access
+intent: Verify remote cluster connectivity, namespace visibility, and basic kubectl access
+namespace: default
+metadata:
+  risk_level: none
+  owner: opsskill
+preconditions:
+  - name: kubectl can reach cluster
+    command: kubectl get namespace default
+actions:
+  - name: list pods in default namespace
+    command: kubectl -n default get pods
+    on_failure: abort
+success_criteria:
+  - name: namespace still visible
+    command: kubectl get namespace default
+    expect_stdout_contains: default
+rollback: []

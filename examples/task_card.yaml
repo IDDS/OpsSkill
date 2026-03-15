@@ -1,0 +1,6 @@
+name: recover-demo-app
+intent: Recover demo-app after transient failure
+namespace: opsskill-sandbox
+workload: demo-app
+diagnosis: rollout restart deployment to recover availability
+severity: medium

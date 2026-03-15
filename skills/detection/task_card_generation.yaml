@@ -1,0 +1,52 @@
+version: "0.1"
+name: task-card-generation
+intent: Convert raw detection evidence into a normalized task card for downstream diagnosis and recovery skills
+namespace: opsskill-exp
+metadata:
+  stage: detection
+  category: analysis
+  risk_level: none
+  required_tools:
+    - kubectl
+    - shell
+  output_artifact: task-card
+  benchmark:
+    included_in: opsskill-paper-v1
+    task_family: detection-task-card-compilation
+    mutability: read-only
+    evaluation_focus:
+      - task-card-completeness
+      - downstream-compatibility
+    benchmark_tags:
+      - paper-minimal-set
+      - detection
+      - analysis
+      - task-card
+  instance_parameters:
+    namespace_env: OPS_NAMESPACE
+    required_fields:
+      - name
+      - intent
+      - namespace
+      - severity
+      - inputs
+  hidden_checks:
+    - name: task-card-has-required-fields
+      signal: task-card-schema
+      command: printf 'name\nintent\nnamespace\nseverity\ninputs\n'
+    - name: task-card-carries-namespace-context
+      signal: namespace-propagation
+      command: printf '%s\n' "opsskill-exp"
+preconditions:
+  - name: namespace accessible
+    command: kubectl get namespace opsskill-exp
+actions:
+  - name: emit task card template
+    command: >-
+      printf 'name: investigate-%s\nintent: Investigate workload degradation in %s\nnamespace: %s\nseverity: medium\ninputs:\n  - pods\n  - events\n  - rollout-history\n' "opsskill-exp" "opsskill-exp" "opsskill-exp"
+    on_failure: abort
+success_criteria:
+  - name: task card template emitted
+    command: printf 'task-card-generated-for-%s\n' "opsskill-exp"
+    expect_stdout_contains: task-card-generated-for
+rollback: []

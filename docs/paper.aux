@@ -1,0 +1,193 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand*\HyPL@Entry[1]{}
+\HyPL@Entry{0<</S/D>>}
+\citation{burns2022kubernetes}
+\citation{beyer2016sre}
+\citation{ghosh2022incidents}
+\citation{wei2022chain}
+\citation{yao2023react}
+\citation{cheng2023aiops}
+\citation{roy2024rca_agents}
+\citation{ruan2023toolemu}
+\citation{ye2024toolsword}
+\citation{shinn2023reflexion}
+\HyPL@Entry{1<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {1}引言}{1}{section.1}\protected@file@percent }
+\citation{cheng2023aiops}
+\citation{bansal2020decaf}
+\citation{ghosh2022incidents}
+\citation{chen2024rcacopilot}
+\citation{roy2024rca_agents}
+\citation{zhou2023dbot}
+\citation{shetty2022autotsg}
+\citation{an2024nissist}
+\citation{lascasas2024llexus}
+\citation{mao2025agentic_tsg}
+\citation{yao2023react}
+\citation{shinn2023reflexion}
+\citation{ruan2023toolemu}
+\citation{ye2024toolsword}
+\citation{xia2024safetoolbench}
+\@writefile{toc}{\contentsline {section}{\numberline {2}相关工作}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{AIOps 与事故知识挖掘。}{2}{paragraph*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{微服务诊断与根因定位。}{2}{paragraph*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{运行手册自动化。}{2}{paragraph*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Agent 工具调用与安全治理。}{2}{paragraph*.4}\protected@file@percent }
+\citation{beyer2016sre}
+\@writefile{toc}{\contentsline {section}{\numberline {3}问题定义}{3}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}环境与任务卡}{3}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}环境能力画像}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}技能表示}{4}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}技能编译-执行-优化闭环}{5}{subsection.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}优化目标}{5}{subsection.3.5}\protected@file@percent }
+\citation{openai2023gpt4}
+\@writefile{toc}{\contentsline {section}{\numberline {4}方法}{6}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}方法概览}{6}{subsection.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces OpsSkill 框架整体流程图。任务卡与环境能力画像经约束感知编译（步骤~1）生成带类型的技能 IR，随后经风险预算门控（步骤~2）决定是否放行执行。受控执行器（步骤~3）产生执行轨迹，隐藏多信号验证器（步骤~4）对轨迹进行判定；若失败，结构化失败驱动优化器（步骤~5）提取失败签名并编辑技能 IR，形成闭环优化。}}{7}{figure.caption.5}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:framework}{{1}{7}{OpsSkill 框架整体流程图。任务卡与环境能力画像经约束感知编译（步骤~1）生成带类型的技能 IR，随后经风险预算门控（步骤~2）决定是否放行执行。受控执行器（步骤~3）产生执行轨迹，隐藏多信号验证器（步骤~4）对轨迹进行判定；若失败，结构化失败驱动优化器（步骤~5）提取失败签名并编辑技能 IR，形成闭环优化。}{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}约束感知技能编译}{7}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}风险预算门控执行}{8}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}风险函数}{8}{subsubsection.4.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}自适应风险权重}{9}{subsubsection.4.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces 自适应风险权重配置（按任务类型）}}{9}{table.caption.6}\protected@file@percent }
+\newlabel{tab:adaptive-weights}{{1}{9}{自适应风险权重配置（按任务类型）}{table.caption.6}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.3}门控器}{9}{subsubsection.4.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}隐藏多信号验证器}{10}{subsection.4.4}\protected@file@percent }
+\citation{shinn2023reflexion}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}结构化失败驱动优化}{11}{subsection.4.5}\protected@file@percent }
+\citation{burns2022kubernetes}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}完整算法}{12}{subsection.4.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}实验}{12}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}实验环境}{12}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{集群配置。}{12}{paragraph*.7}\protected@file@percent }
+\citation{chaosmesh2021}
+\citation{basiri2016chaos}
+\citation{yao2023react}
+\citation{shinn2023reflexion}
+\citation{yao2023react}
+\citation{shinn2023reflexion}
+\citation{shetty2022autotsg}
+\@writefile{toc}{\contentsline {paragraph}{目标应用。}{13}{paragraph*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{混沌工程。}{13}{paragraph*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}基线与消融}{13}{subsection.5.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces 基线与消融方法描述}}{13}{table.caption.10}\protected@file@percent }
+\newlabel{tab:methods}{{2}{13}{基线与消融方法描述}{table.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}主要结果（RQ1）}{13}{subsection.5.3}\protected@file@percent }
+\citation{shinn2023reflexion}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Baseline comparison across all fault domains.}}{14}{table.caption.11}\protected@file@percent }
+\newlabel{tab:baseline-comparison}{{3}{14}{Baseline comparison across all fault domains}{table.caption.11}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Ablation study: contribution of each OpsSkill component.}}{14}{table.caption.12}\protected@file@percent }
+\newlabel{tab:ablation}{{4}{14}{Ablation study: contribution of each OpsSkill component}{table.caption.12}{}}
+\citation{ghosh2022incidents}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Per-domain hidden verification pass rate (HVP) and score by method.}}{15}{table.caption.13}\protected@file@percent }
+\newlabel{tab:domain-breakdown}{{5}{15}{Per-domain hidden verification pass rate (HVP) and score by method}{table.caption.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}跨域一致性（RQ3）}{15}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}安全性分析：变异任务}{15}{subsection.5.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Failure signature to structural edit mapping ($\Delta _\sigma $).}}{16}{table.caption.15}\protected@file@percent }
+\newlabel{tab:delta-sigma}{{6}{16}{Failure signature to structural edit mapping ($\Delta _\sigma $)}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}执行效率}{16}{subsection.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.7}技能优化前后对比（RQ4）}{16}{subsection.5.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{实验设计。}{16}{paragraph*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{优化结果。}{16}{table.caption.17}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Skill optimization before/after comparison. $S_0$: initial skill under adversarial failure; $S_1$: after applying $\Delta _\sigma (S)$.}}{17}{table.caption.17}\protected@file@percent }
+\newlabel{tab:optimization}{{7}{17}{Skill optimization before/after comparison. $S_0$: initial skill under adversarial failure; $S_1$: after applying $\Delta _\sigma (S)$}{table.caption.17}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces 技能优化前后评分对比：$S_0$（初始技能在对抗条件下的表现）与 $S_1$（优化后技能的表现）}}{17}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:optimization}{{2}{17}{技能优化前后评分对比：$S_0$（初始技能在对抗条件下的表现）与 $S_1$（优化后技能的表现）}{figure.caption.18}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 结构化编辑 $\Delta _\sigma (S)$ 的组件层面变化：前置条件、回滚和隐藏检查的数量变化}}{18}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:enrichment}{{3}{18}{结构化编辑 $\Delta _\sigma (S)$ 的组件层面变化：前置条件、回滚和隐藏检查的数量变化}{figure.caption.19}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces 优化改进瀑布图：每种失败类型对应的评分提升和具体改进策略}}{18}{figure.caption.20}\protected@file@percent }
+\newlabel{fig:waterfall}{{4}{18}{优化改进瀑布图：每种失败类型对应的评分提升和具体改进策略}{figure.caption.20}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.8}统一评估指标分析}{18}{subsection.5.8}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Unified scoring formula applied to all methods. $\text  {Score}_{U} = 0.20 P + 0.20 A + 0.25 V_{vis} + 0.25 V_{hid} - 0.10 R$. Components scoring 0 indicate the method does not implement that capability.}}{19}{table.caption.21}\protected@file@percent }
+\newlabel{tab:unified-eval}{{8}{19}{Unified scoring formula applied to all methods. $\text {Score}_{U} = 0.20 P + 0.20 A + 0.25 V_{vis} + 0.25 V_{hid} - 0.10 R$. Components scoring 0 indicate the method does not implement that capability}{table.caption.21}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Per-task score breakdown by method (\%). Bold indicates best per task.}}{19}{table.caption.22}\protected@file@percent }
+\newlabel{tab:per-task}{{9}{19}{Per-task score breakdown by method (\%). Bold indicates best per task}{table.caption.22}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.9}任务级细粒度分析}{19}{subsection.5.9}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Scoring sensitivity analysis: method scores under different weight profiles. OpsSkill ranks first under all configurations, demonstrating conclusion robustness.}}{20}{table.caption.24}\protected@file@percent }
+\newlabel{tab:sensitivity}{{10}{20}{Scoring sensitivity analysis: method scores under different weight profiles. OpsSkill ranks first under all configurations, demonstrating conclusion robustness}{table.caption.24}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 任务级评分热力图：行为方法，列为任务，颜色深度表示评分高低}}{20}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:per-task-heatmap}{{5}{20}{任务级评分热力图：行为方法，列为任务，颜色深度表示评分高低}{figure.caption.23}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.10}评分权重敏感性分析}{20}{subsection.5.10}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces 评分权重敏感性分析：OpsSkill（B5）在所有 5 种权重配置下均保持最高分}}{21}{figure.caption.25}\protected@file@percent }
+\newlabel{fig:sensitivity}{{6}{21}{评分权重敏感性分析：OpsSkill（B5）在所有 5 种权重配置下均保持最高分}{figure.caption.25}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.11}案例分析：OpsSkill 端到端运维过程}{21}{subsection.5.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.11.1}案例一：CPU 压力下的故障检测-诊断-恢复}{21}{subsubsection.5.11.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{场景描述。}{21}{paragraph*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{步骤~1：约束感知编译。}{21}{paragraph*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{步骤~2：风险预算门控。}{22}{paragraph*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{步骤~3：受控执行。}{22}{paragraph*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{步骤~4：隐藏多信号验证。}{22}{paragraph*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{后续阶段。}{22}{paragraph*.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{对比：B2-ReAct 在同一场景下的表现。}{22}{paragraph*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.11.2}案例二：RBAC 权限不足场景下的技能优化闭环}{22}{subsubsection.5.11.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{初始技能 $S_0$。}{23}{paragraph*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{执行失败与签名提取。}{23}{paragraph*.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{结构化编辑 $\Delta _\sigma $。}{23}{paragraph*.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{优化效果对比。}{23}{paragraph*.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{与 Reflexion 的对比。}{24}{paragraph*.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.11.3}案例三：Rollout 超时场景下的回滚增强}{24}{subsubsection.5.11.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{场景描述。}{24}{paragraph*.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{失败签名与编辑。}{24}{paragraph*.39}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{小结。}{24}{paragraph*.40}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.12}实验图表}{24}{subsection.5.12}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces 基线方法综合评分对比}}{24}{figure.caption.41}\protected@file@percent }
+\newlabel{fig:baseline}{{7}{24}{基线方法综合评分对比}{figure.caption.41}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces 消融研究：各组件贡献分析}}{25}{figure.caption.42}\protected@file@percent }
+\newlabel{fig:ablation}{{8}{25}{消融研究：各组件贡献分析}{figure.caption.42}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces 各方法在三个故障域上的表现（雷达图）}}{25}{figure.caption.43}\protected@file@percent }
+\newlabel{fig:radar}{{9}{25}{各方法在三个故障域上的表现（雷达图）}{figure.caption.43}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces 方法 $\times $ 任务评分热力图}}{26}{figure.caption.44}\protected@file@percent }
+\newlabel{fig:heatmap}{{10}{26}{方法 $\times $ 任务评分热力图}{figure.caption.44}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces 安全性分析：不安全动作率与假阳性差距}}{26}{figure.caption.45}\protected@file@percent }
+\newlabel{fig:safety}{{11}{26}{安全性分析：不安全动作率与假阳性差距}{figure.caption.45}{}}
+\citation{yao2023react}
+\citation{cheng2023aiops}
+\citation{shetty2022autotsg}
+\citation{zhou2023dbot}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces 各方法墙钟时间散点图}}{27}{figure.caption.46}\protected@file@percent }
+\newlabel{fig:walltime}{{12}{27}{各方法墙钟时间散点图}{figure.caption.46}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}讨论}{27}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}为什么结构化 IR 比自由文本推理更有效？}{27}{subsection.6.1}\protected@file@percent }
+\citation{ruan2023toolemu}
+\citation{ye2024toolsword}
+\citation{shinn2023reflexion}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}策略门控的安全-效能权衡}{28}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}结构化失败驱动优化的价值}{28}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}评估方法论的公平性}{28}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}局限性}{29}{subsection.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}对有效性的威胁}{29}{subsection.6.6}\protected@file@percent }
+\citation{chen2020incidenttriage}
+\@writefile{toc}{\contentsline {section}{\numberline {7}结论}{30}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{主要实验发现：}{30}{paragraph*.47}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{组件贡献排序：}{30}{paragraph*.48}\protected@file@percent }
+\citation{openai2023gpt4,touvron2023llama}
+\bibstyle{unsrtnat}
+\bibdata{references}
+\bibcite{burns2022kubernetes}{{1}{2022}{{Burns et~al.}}{{Burns, Beda, Hightower, and Evenson}}}
+\bibcite{beyer2016sre}{{2}{2016}{{Beyer et~al.}}{{Beyer, Jones, Petoff, and Murphy}}}
+\bibcite{ghosh2022incidents}{{3}{2022}{{Ghosh et~al.}}{{Ghosh, Shetty, Bansal, and Nath}}}
+\bibcite{wei2022chain}{{4}{2022}{{Wei et~al.}}{{Wei, Wang, Schuurmans, Bosma, Ichter, Xia, Chi, Le, and Zhou}}}
+\bibcite{yao2023react}{{5}{2023}{{Yao et~al.}}{{Yao, Zhao, Yu, Du, Shafran, Narasimhan, and Cao}}}
+\bibcite{cheng2023aiops}{{6}{2023}{{Cheng et~al.}}{{Cheng, Sahoo, Saha, Yang, Liu, Woo, Saverese, and Hoi}}}
+\bibcite{roy2024rca_agents}{{7}{2024}{{Roy et~al.}}{{Roy, Zhang, Bhave, Bansal, Cardenas, Rajmohan, Nair, and Gopi}}}
+\@writefile{toc}{\contentsline {paragraph}{结论鲁棒性：}{31}{paragraph*.49}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{未来方向：}{31}{paragraph*.50}\protected@file@percent }
+\bibcite{ruan2023toolemu}{{8}{2023}{{Ruan et~al.}}{{Ruan, Dong, Wang, Pitis, Zhou, Ba, Dubois, Maddison, and Hashimoto}}}
+\bibcite{ye2024toolsword}{{9}{2024}{{Ye et~al.}}{{Ye, Li, Li, Huang, Gao, Wu, Chen, et~al.}}}
+\bibcite{shinn2023reflexion}{{10}{2023}{{Shinn et~al.}}{{Shinn, Cassano, Gopinath, Narasimhan, and Yao}}}
+\bibcite{bansal2020decaf}{{11}{2020}{{Bansal et~al.}}{{Bansal, Renganathan, Asudani, Midy, and Janakiraman}}}
+\bibcite{chen2024rcacopilot}{{12}{2024}{{Chen et~al.}}{{Chen, Xie, Ma, Kang, Gao, Shi, Cao, Gao, Fan, Wen, et~al.}}}
+\bibcite{zhou2023dbot}{{13}{2023}{{Zhou et~al.}}{{Zhou, Li, Sun, Liu, Chen, Wu, Liu, Feng, and Zeng}}}
+\bibcite{shetty2022autotsg}{{14}{2022}{{Shetty et~al.}}{{Shetty, Bansal, Upadhyayula, Nair, and Nagappan}}}
+\bibcite{an2024nissist}{{15}{2024}{{An et~al.}}{{An, Yang, Lu, Li, Ren, Huang, Zhang, Rajmohan, Zhang, Gopi, et~al.}}}
+\bibcite{lascasas2024llexus}{{16}{2024}{{Las-Casas et~al.}}{{Las-Casas, Kumbhare, Fonseca, et~al.}}}
+\bibcite{mao2025agentic_tsg}{{17}{2025}{{Mao et~al.}}{{Mao, Li, Gao, Peng, He, Zhang, et~al.}}}
+\bibcite{xia2024safetoolbench}{{18}{2025}{{Xia et~al.}}{{Xia, Wang, Liu, Yu, Guo, et~al.}}}
+\bibcite{openai2023gpt4}{{19}{2023}{{OpenAI}}{{}}}
+\bibcite{chaosmesh2021}{{20}{2021}{{Chaos Mesh Authors}}{{}}}
+\bibcite{basiri2016chaos}{{21}{2016}{{Basiri et~al.}}{{Basiri, Behnam, de~Rooij, Hochstein, Kosewski, Reynolds, and Rosenthal}}}
+\bibcite{chen2020incidenttriage}{{22}{2019}{{Chen et~al.}}{{Chen, He, Liu, Zhang, Sui, and Zhang}}}
+\bibcite{touvron2023llama}{{23}{2023}{{Touvron et~al.}}{{Touvron, Lavril, Izacard, Martinet, Lachaux, Lacroix, Rozière, Goyal, Hambro, Azhar, et~al.}}}
+\gdef \@abspage@last{34}

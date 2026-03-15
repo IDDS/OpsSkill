@@ -1,0 +1,14 @@
+name: network-detect-change
+intent: Correlate workload health with recent configuration or revision changes under network delay
+fault_domain: network
+task_family: T1
+task_type: read-only
+namespace: opsskill-exp
+workload: demo-app
+expected_outcome: Deployment revision and timestamp summary showing recent changes
+opsskill_skill: skills/detection/config_change_correlation.yaml
+hidden_checks:
+  - name: revision-annotation-visible
+    command: "kubectl -n opsskill-exp get deployments -o jsonpath='{range .items[*]}{.metadata.name}={.metadata.annotations.deployment\\.kubernetes\\.io/revision}\\n{end}'"
+  - name: deployment-timestamps-visible
+    command: "kubectl -n opsskill-exp get deployments -o jsonpath='{range .items[*]}{.metadata.name}={.metadata.creationTimestamp}\\n{end}'"

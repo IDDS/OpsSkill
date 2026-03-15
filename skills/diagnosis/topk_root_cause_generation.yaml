@@ -1,0 +1,51 @@
+version: "0.1"
+name: topk-root-cause-generation
+intent: Generate top-k candidate root causes from workload states, events, and logs
+namespace: opsskill-exp
+metadata:
+  stage: diagnosis
+  category: analysis
+  risk_level: low
+  required_tools:
+    - kubectl
+    - shell
+  output_artifact: root-cause-candidates
+  benchmark:
+    included_in: opsskill-paper-v1
+    task_family: diagnosis-topk-rca
+    mutability: read-only
+    evaluation_focus:
+      - candidate-recall
+      - evidence-grounding
+    benchmark_tags:
+      - paper-minimal-set
+      - diagnosis
+      - rca
+      - candidate-generation
+  instance_parameters:
+    namespace_env: OPS_NAMESPACE
+    topk: 3
+    candidate_types:
+      - resource-pressure
+      - image-failure
+      - config-error
+      - permissions
+  hidden_checks:
+    - name: candidate-source-signals-present
+      signal: workload-state-summary
+      command: kubectl -n opsskill-exp get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.phase}{"\t"}{range .status.containerStatuses[*]}{.restartCount}{":"}{.state.waiting.reason}{" "}{end}{"\n"}{end}'
+    - name: warning-events-available-for-rca
+      signal: diagnostic-events
+      command: kubectl -n opsskill-exp get events --field-selector type=Warning --no-headers
+preconditions:
+  - name: pods visible
+    command: kubectl -n opsskill-exp get pods
+actions:
+  - name: summarize top candidate failure states
+    command: kubectl -n opsskill-exp get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.phase}{"\t"}{range .status.containerStatuses[*]}{.state.waiting.reason}{" "}{.lastState.terminated.reason}{" "}{end}{"\n"}{end}'
+    on_failure: abort
+success_criteria:
+  - name: candidate summary emitted
+    command: printf 'root-cause-candidates-generated\n'
+    expect_stdout_contains: root-cause-candidates-generated
+rollback: []

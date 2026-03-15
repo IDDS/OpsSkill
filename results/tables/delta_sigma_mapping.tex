@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\caption{Failure signature to structural edit mapping ($\Delta_\sigma$).}
+\label{tab:delta-sigma}
+\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Failure Type $\sigma$} & \textbf{Structural Edit $\Delta_\sigma(S)$} & \textbf{Target Component} \\
+\midrule
+RBAC\_DENIED & Add \texttt{kubectl auth can-i} check & Precondition \\
+RESOURCE\_NOT\_FOUND & Add resource existence probe & Precondition \\
+ROLLOUT\_TIMEOUT & Add \texttt{rollout undo} entry & Rollback \\
+READINESS\_NOT\_MET & Add pod-readiness jsonpath signal & Hidden Check \\
+CRD\_MISSING & Add CRD existence probe & Precondition \\
+COMMAND\_NOT\_FOUND & Add tool availability check & Precondition \\
+\bottomrule
+\end{tabular}
+\end{table}

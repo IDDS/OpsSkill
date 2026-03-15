@@ -1,0 +1,15 @@
+name: memory-recover-rollout
+intent: Safely restart a target deployment after diagnosis indicates memory-pressure-induced failure
+fault_domain: memory
+task_family: T2
+task_type: mutating
+namespace: opsskill-exp
+workload: demo-app
+expected_outcome: Deployment successfully rolled out with all pods Running and available
+opsskill_skill: skills/recovery/deployment_rollout_restart.yaml
+hidden_checks:
+  - name: deployment-available-after-restart
+    command: "kubectl -n opsskill-exp get deployment demo-app -o jsonpath='{.status.availableReplicas}/{.status.replicas}'"
+  - name: pod-phase-healthy
+    command: "kubectl -n opsskill-exp get pods -l app=demo-app -o jsonpath='{range .items[*]}{.metadata.name}={.status.phase}\\n{end}'"
+    expect_stdout_contains: Running

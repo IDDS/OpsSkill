@@ -1,0 +1,88 @@
+benchmark_suite: opsskill-paper-v1
+task_instances:
+  - id: det-001
+    stage: detection
+    skill: skills/detection/metric_anomaly_detection.yaml
+    namespace: default
+    scenario: detect abnormal restarts after transient workload degradation
+    specialization:
+      namespace_env: default
+    expected_hidden_signals:
+      - pod-restart-count
+      - pod-readiness
+  - id: det-002
+    stage: detection
+    skill: skills/detection/k8s_event_burst_detection.yaml
+    namespace: default
+    scenario: identify warning event bursts related to failed jobs or probes
+    specialization:
+      namespace_env: default
+    expected_hidden_signals:
+      - k8s-warning-events
+      - event-involved-objects
+  - id: diag-001
+    stage: diagnosis
+    skill: skills/diagnosis/pod_deployment_state_diagnosis.yaml
+    namespace: default
+    scenario: diagnose rollout or pod waiting-state anomalies
+    specialization:
+      namespace_env: default
+    expected_hidden_signals:
+      - waiting-reason
+      - deployment-availability
+  - id: diag-002
+    stage: diagnosis
+    skill: skills/diagnosis/topk_root_cause_generation.yaml
+    namespace: default
+    scenario: generate top-k root causes from pods and warning events
+    specialization:
+      namespace_env: default
+      topk: 3
+    expected_hidden_signals:
+      - workload-state-summary
+      - diagnostic-events
+  - id: rec-001
+    stage: recovery
+    skill: skills/recovery/deployment_rollout_restart.yaml
+    namespace: opsskill-sandbox
+    scenario: recover a degraded deployment via rollout restart
+    specialization:
+      namespace_env: opsskill-sandbox
+      deployment_name: demo-app
+    expected_hidden_signals:
+      - deployment-availability
+      - pod-phase-health
+  - id: rec-002
+    stage: recovery
+    skill: skills/recovery/config_rollback.yaml
+    namespace: opsskill-sandbox
+    scenario: roll back a deployment after a bad configuration change
+    specialization:
+      namespace_env: opsskill-sandbox
+      deployment_name: demo-app
+      target_revision: previous-stable
+    expected_hidden_signals:
+      - revision-history
+      - deployment-availability
+  - id: rec-003
+    stage: recovery
+    skill: skills/recovery/patch_image_or_config.yaml
+    namespace: opsskill-sandbox
+    scenario: repair a broken image or config reference after diagnosis
+    specialization:
+      namespace_env: opsskill-sandbox
+      deployment_name: demo-app
+      image_placeholder: registry.example.com/demo-app:stable
+    expected_hidden_signals:
+      - template-specialization
+      - deployment-availability
+  - id: rec-004
+    stage: recovery
+    skill: skills/recovery/hidden_recovery_verification.yaml
+    namespace: opsskill-sandbox
+    scenario: verify post-remediation health using hidden checks
+    specialization:
+      namespace_env: opsskill-sandbox
+    expected_hidden_signals:
+      - deployment-availability
+      - service-visibility

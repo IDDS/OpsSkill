@@ -1,0 +1,42 @@
+{
+  "skill_name": "hidden-recovery-verification",
+  "preconditions": [
+    {
+      "name": "namespace accessible",
+      "passed": true,
+      "detail": "exit=0",
+      "raw": {
+        "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl get namespace ${OPS_NAMESPACE}",
+        "returncode": 0,
+        "stdout": "NAME           STATUS   AGE\nopsskill-exp   Active   9h",
+        "stderr": ""
+      },
+      "agent_rationale": "Heuristic verifier observed exit=0.",
+      "agent_verdict": "pass"
+    }
+  ],
+  "actions": [
+    {
+      "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get deployments,pods,svc -o wide",
+      "returncode": 0,
+      "stdout": "NAME                       READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES              SELECTOR\ndeployment.apps/demo-app   1/1     1            1           9h    demo-app     nginx:1.27-alpine   app=demo-app\n\nNAME                            READY   STATUS    RESTARTS   AGE   IP             NODE    NOMINATED NODE   READINESS GATES\npod/demo-app-6b49b4b9f7-rnrff   1/1     Running   0          75s   10.244.2.157   lsy-2   <none>           <none>\n\nNAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE   SELECTOR\nservice/demo-app   ClusterIP   10.107.16.44   <none>        80/TCP    9h    app=demo-app",
+      "stderr": ""
+    }
+  ],
+  "success_criteria": [
+    {
+      "name": "all deployments available",
+      "passed": true,
+      "detail": "exit=0",
+      "raw": {
+        "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get deployments -o jsonpath='{range .items[*]}{.metadata.name}{\"=\"}{.status.availableReplicas}{\"/\"}{.status.replicas}{\"\\n\"}{end}'",
+        "returncode": 0,
+        "stdout": "demo-app=1/1",
+        "stderr": ""
+      },
+      "agent_rationale": "Heuristic verifier observed exit=0.",
+      "agent_verdict": "pass"
+    }
+  ],
+  "rollback": []
+}

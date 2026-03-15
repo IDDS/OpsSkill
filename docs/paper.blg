@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: paper.aux
+The style file: unsrtnat.bst
+Database file #1: references.bib
+Warning--can't use both volume and number fields in lascasas2024llexus
+You've used 23 entries,
+            2481 wiz_defined-function locations,
+            667 strings with 10049 characters,
+and the built_in function-call counts, 11497 in all, are:
+= -- 788
+> -- 965
+< -- 13
++ -- 346
+- -- 300
+* -- 965
+:= -- 1919
+add.period$ -- 78
+call.type$ -- 23
+change.case$ -- 45
+chr.to.int$ -- 23
+cite$ -- 24
+duplicate$ -- 539
+empty$ -- 900
+format.name$ -- 323
+if$ -- 2413
+int.to.chr$ -- 1
+int.to.str$ -- 24
+missing$ -- 24
+newline$ -- 124
+num.names$ -- 69
+pop$ -- 249
+preamble$ -- 1
+purify$ -- 23
+quote$ -- 0
+skip$ -- 326
+stack$ -- 0
+substring$ -- 313
+swap$ -- 134
+text.length$ -- 11
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 155
+warning$ -- 1
+while$ -- 72
+width$ -- 0
+write$ -- 306
+(There was 1 warning)

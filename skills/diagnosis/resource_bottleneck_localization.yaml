@@ -1,0 +1,47 @@
+version: "0.1"
+name: resource-bottleneck-localization
+intent: Localize CPU or memory bottlenecks through resource requests, limits, and node placement data
+namespace: opsskill-exp
+metadata:
+  stage: diagnosis
+  category: analysis
+  risk_level: none
+  required_tools:
+    - kubectl
+  paper_role: resource-localization-skill
+  benchmark:
+    included_in: opsskill-paper-v1
+    task_family: diagnosis-resource-bottleneck
+    mutability: read-only
+    evaluation_focus:
+      - resource-evidence-quality
+      - portability-across-workloads
+    benchmark_tags:
+      - paper-minimal-set
+      - diagnosis
+      - resources
+      - kubernetes
+  instance_parameters:
+    namespace_env: OPS_NAMESPACE
+    target_signal:
+      - cpu-request-limit-gap
+      - memory-request-limit-gap
+      - node-placement
+  hidden_checks:
+    - name: request-limit-pairs-visible
+      signal: requests-limits
+      command: kubectl -n opsskill-exp get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{":"}{.resources.requests.cpu}{"/"}{.resources.limits.cpu}{","}{.resources.requests.memory}{"/"}{.resources.limits.memory}{" "}{end}{"\n"}{end}'
+    - name: node-placement-visible
+      signal: node-scheduling
+      command: kubectl -n opsskill-exp get pods -o jsonpath='{range .items[*]}{.metadata.name}{"="}{.spec.nodeName}{"\n"}{end}'
+preconditions:
+  - name: workloads visible
+    command: kubectl -n opsskill-exp get pods
+actions:
+  - name: inspect requests limits and scheduling placement
+    command: kubectl -n opsskill-exp get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.nodeName}{"\t"}{range .spec.containers[*]}{.name}{":"}{.resources.requests.cpu}{"/"}{.resources.limits.cpu}{","}{.resources.requests.memory}{"/"}{.resources.limits.memory}{" "}{end}{"\n"}{end}'
+    on_failure: abort
+success_criteria:
+  - name: resource profile collected
+    command: kubectl -n opsskill-exp get pods
+rollback: []

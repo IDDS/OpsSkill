@@ -1,0 +1,42 @@
+{
+  "skill_name": "pod-deployment-state-diagnosis",
+  "preconditions": [
+    {
+      "name": "workloads visible",
+      "passed": true,
+      "detail": "exit=0",
+      "raw": {
+        "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get deployments,pods",
+        "returncode": 0,
+        "stdout": "NAME                       READY   UP-TO-DATE   AVAILABLE   AGE\ndeployment.apps/demo-app   1/1     1            1           9h\n\nNAME                           READY   STATUS    RESTARTS   AGE\npod/demo-app-969f46449-j8xlw   1/1     Running   0          8h",
+        "stderr": ""
+      },
+      "agent_rationale": "Heuristic verifier observed exit=0.",
+      "agent_verdict": "pass"
+    }
+  ],
+  "actions": [
+    {
+      "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} describe deployments,pods",
+      "returncode": 0,
+      "stdout": "Name:                   demo-app\nNamespace:              opsskill-exp\nCreationTimestamp:      Sat, 14 Mar 2026 15:38:43 +0000\nLabels:                 app=demo-app\nAnnotations:            deployment.kubernetes.io/revision: 4\nSelector:               app=demo-app\nReplicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable\nStrategyType:           RollingUpdate\nMinReadySeconds:        0\nRollingUpdateStrategy:  25% max unavailable, 25% max surge\nPod Template:\n  Labels:       app=demo-app\n  Annotations:  kubectl.kubernetes.io/restartedAt: 2026-03-14T16:16:15Z\n  Containers:\n   demo-app:\n    Image:      nginx:1.27-alpine\n    Port:       80/TCP\n    Host Port:  0/TCP\n    Limits:\n      cpu:     500m\n      memory:  256Mi\n    Requests:\n      cpu:         100m\n      memory:      128Mi\n    Liveness:      http-get http://:80/ delay=10s timeout=1s period=10s #success=1 #failure=3\n    Readiness:     http-get http://:80/ delay=3s timeout=1s period=5s #success=1 #failure=3\n    Environment:   <none>\n    Mounts:        <none>\n  Volumes:         <none>\n  Node-Selectors:  kubernetes.io/hostname=lsy-2\n  Tolerations:     <none>\nConditions:\n  Type           Status  Reason\n  ----           ------  ------\n  Available      True    MinimumReplicasAvailable\n  Progressing    True    NewReplicaSetAvailable\nOldReplicaSets:  demo-app-c98f7b96 (0/0 replicas created), demo-app-765797fc8d (0/0 replicas created), demo-app-755747b955 (0/0 replicas created)\nNewReplicaSet:   demo-app-969f46449 (1/1 replicas created)\nEvents:          <none>\n\n\nName:             demo-app-969f46449-j8xlw\nNamespace:        opsskill-exp\nPriority:         0\nService Account:  default\nNode:             lsy-2/10.10.2.199\nStart Time:       Sat, 14 Mar 2026 16:16:15 +0000\nLabels:           app=demo-app\n                  pod-template-hash=969f46449\nAnnotations:      kubectl.kubernetes.io/restartedAt: 2026-03-14T16:16:15Z\nStatus:           Running\nIP:               10.244.2.154\nIPs:\n  IP:           10.244.2.154\nControlled By:  ReplicaSet/demo-app-969f46449\nContainers:\n  demo-app:\n    Container ID:   docker://915c69122b5a6580e4e59829b8538ce60ccbd47a04809a4f4c6104619f630d95\n    Image:          nginx:1.27-alpine\n    Image ID:       docker-pullable://nginx@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10\n    Port:           80/TCP\n    Host Port:      0/TCP\n    State:          Running\n      Started:      Sat, 14 Mar 2026 16:16:16 +0000\n    Ready:          True\n    Restart Count:  0\n    Limits:\n      cpu:     500m\n      memory:  256Mi\n    Requests:\n      cpu:        100m\n      memory:     128Mi\n    Liveness:     http-get http://:80/ delay=10s timeout=1s period=10s #success=1 #failure=3\n    Readiness:    http-get http://:80/ delay=3s timeout=1s period=5s #success=1 #failure=3\n    Environment:  <none>\n    Mounts:\n      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-958wh (ro)\nConditions:\n  Type                        Status\n  PodReadyToStartContainers   True \n  Initialized                 True \n  Ready                       True \n  ContainersReady             True \n  PodScheduled                True \nVolumes:\n  kube-api-access-958wh:\n    Type:                    Projected (a volume that contains injected data from multiple sources)\n    TokenExpirationSeconds:  3607\n    ConfigMapName:           kube-root-ca.crt\n    Optional:                false\n    DownwardAPI:             true\nQoS Class:                   Burstable\nNode-Selectors:              kubernetes.io/hostname=lsy-2\nTolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s\n                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s\nEvents:                      <none>",
+      "stderr": ""
+    }
+  ],
+  "success_criteria": [
+    {
+      "name": "detailed state collected",
+      "passed": true,
+      "detail": "exit=0",
+      "raw": {
+        "command": "ssh -J openstack@222.200.180.102 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=30 -o StrictHostKeyChecking=no ubuntu@10.10.3.110 export OPS_NAMESPACE=opsskill-exp && kubectl -n ${OPS_NAMESPACE} get pods",
+        "returncode": 0,
+        "stdout": "NAME                       READY   STATUS    RESTARTS   AGE\ndemo-app-969f46449-j8xlw   1/1     Running   0          8h",
+        "stderr": ""
+      },
+      "agent_rationale": "Heuristic verifier observed exit=0.",
+      "agent_verdict": "pass"
+    }
+  ],
+  "rollback": []
+}

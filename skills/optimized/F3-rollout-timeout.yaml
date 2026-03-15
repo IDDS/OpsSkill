@@ -1,0 +1,53 @@
+version: '0.1'
+name: deployment-rollout-restart
+intent: Safely restart a target deployment after diagnosis indicates a transient or
+  configuration-related failure
+namespace: opsskill-exp
+metadata:
+  stage: recovery
+  category: action
+  risk_level: medium
+  target_kind: deployment
+  required_tools:
+  - kubectl
+  benchmark:
+    included_in: opsskill-paper-v1
+    task_family: recovery-rollout-restart
+    mutability: mutating
+    evaluation_focus:
+    - hidden-success
+    - rollback-quality
+    - safety-gating
+    benchmark_tags:
+    - paper-minimal-set
+    - recovery
+    - rollout
+    - kubernetes
+  instance_parameters:
+    namespace_env: OPS_NAMESPACE
+    deployment_name: demo-app
+    expected_failure_mode: transient-or-config-induced
+  hidden_checks:
+  - name: deployment-available-after-restart
+    signal: deployment-availability
+    command: kubectl -n opsskill-exp get deployment demo-app -o jsonpath='{.status.availableReplicas}/{.status.replicas}'
+  - name: pod-phase-healthy-after-restart
+    signal: pod-phase-health
+    command: kubectl -n opsskill-exp get pods -l app=demo-app -o jsonpath='{range
+      .items[*]}{.metadata.name}{"="}{.status.phase}{"\n"}{end}'
+preconditions:
+- name: demo deployment exists
+  command: kubectl -n opsskill-exp get deployment demo-app
+  expect_exit_code: 0
+actions:
+- name: restart deployment rollout
+  command: kubectl -n opsskill-exp rollout restart deployment/demo-app
+  on_failure: rollback
+success_criteria:
+- name: rollout completes
+  command: kubectl -n opsskill-exp rollout status deployment/demo-app --timeout=120s
+  expect_exit_code: 0
+  expect_stdout_contains: successfully rolled out
+rollback:
+- name: undo rollout
+  command: kubectl -n opsskill-exp rollout undo deployment/demo-app

@@ -1,0 +1,21 @@
+version: '0.1'
+name: recover-demo-app
+intent: Recover demo-app after transient failure
+namespace: opsskill-exp
+metadata:
+  source: template-fallback
+  severity: medium
+preconditions:
+- name: target deployment exists
+  command: kubectl -n opsskill-exp get deployment demo-app
+actions:
+- name: rollout restart deployment
+  command: kubectl -n opsskill-exp rollout restart deployment/demo-app
+  on_failure: rollback
+success_criteria:
+- name: deployment available
+  command: kubectl -n opsskill-exp rollout status deployment/demo-app --timeout=120s
+  expect_stdout_contains: successfully rolled out
+rollback:
+- name: undo rollout
+  command: kubectl -n opsskill-exp rollout undo deployment/demo-app

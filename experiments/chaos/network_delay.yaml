@@ -1,0 +1,24 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: demo-app-network-delay
+  namespace: opsskill-exp
+spec:
+  action: delay
+  mode: all
+  selector:
+    namespaces:
+      - opsskill-exp
+    labelSelectors:
+      app: demo-app
+  delay:
+    latency: "120ms"
+    correlation: "50"
+    jitter: "30ms"
+  duration: "__CHAOS_DURATION__"
+  direction: to
+  target:
+    mode: all
+    selector:
+      namespaces:
+        - opsskill-exp

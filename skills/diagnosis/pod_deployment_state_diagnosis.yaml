@@ -1,0 +1,50 @@
+version: "0.1"
+name: pod-deployment-state-diagnosis
+intent: Diagnose pod and deployment state anomalies such as CrashLoopBackOff, Pending, or rollout failure
+namespace: opsskill-exp
+metadata:
+  stage: diagnosis
+  category: analysis
+  risk_level: none
+  required_tools:
+    - kubectl
+  paper_role: object-state-diagnosis-skill
+  benchmark:
+    included_in: opsskill-paper-v1
+    task_family: diagnosis-object-state
+    mutability: read-only
+    evaluation_focus:
+      - object-state-coverage
+      - diagnosis-evidence-quality
+    benchmark_tags:
+      - paper-minimal-set
+      - diagnosis
+      - kubernetes
+      - read-only
+  instance_parameters:
+    namespace_env: OPS_NAMESPACE
+    target_kinds:
+      - deployment
+      - pod
+    failure_patterns:
+      - CrashLoopBackOff
+      - Pending
+      - ImagePullBackOff
+  hidden_checks:
+    - name: pod-reasons-visible
+      signal: waiting-reason
+      command: kubectl -n opsskill-exp get pods -o jsonpath='{range .items[*]}{.metadata.name}{"="}{range .status.containerStatuses[*]}{.state.waiting.reason}{" "}{end}{"\n"}{end}'
+    - name: deployment-availability-visible
+      signal: deployment-availability
+      command: kubectl -n opsskill-exp get deployments -o jsonpath='{range .items[*]}{.metadata.name}{"="}{.status.availableReplicas}{"/"}{.status.replicas}{"\n"}{end}'
+preconditions:
+  - name: workloads visible
+    command: kubectl -n opsskill-exp get deployments,pods
+actions:
+  - name: describe pods and deployments
+    command: kubectl -n opsskill-exp describe deployments,pods
+    on_failure: abort
+success_criteria:
+  - name: detailed state collected
+    command: kubectl -n opsskill-exp get pods
+rollback: []

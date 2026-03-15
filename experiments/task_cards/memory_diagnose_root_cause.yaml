@@ -1,0 +1,14 @@
+name: memory-diagnose-root-cause
+intent: Generate top-k candidate root causes from workload states and events under memory pressure
+fault_domain: memory
+task_family: T1
+task_type: read-only
+namespace: opsskill-exp
+workload: demo-app
+expected_outcome: Root cause candidate summary linking memory pressure to pod health degradation
+opsskill_skill: skills/diagnosis/topk_root_cause_generation.yaml
+hidden_checks:
+  - name: candidate-source-signals-present
+    command: "kubectl -n opsskill-exp get pods -o jsonpath='{range .items[*]}{.metadata.name}\\t{.status.phase}\\t{range .status.containerStatuses[*]}{.restartCount}:{.state.waiting.reason} {end}\\n{end}'"
+  - name: warning-events-available-for-rca
+    command: "kubectl -n opsskill-exp get events --field-selector type=Warning --no-headers"

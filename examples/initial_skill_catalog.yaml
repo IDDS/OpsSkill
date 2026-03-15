@@ -1,0 +1,76 @@
+stages:
+  detection:
+    - name: metric-anomaly-detection
+      category: observation
+      inputs: [prometheus_metrics, service_name, time_window]
+      tools: [promql, prometheus_api]
+      outputs: [anomalous_metrics, time_range, suspect_services]
+      risk_level: none
+    - name: k8s-event-burst-detection
+      category: observation
+      inputs: [namespace, event_stream, time_window]
+      tools: [kubectl_get_events, kubernetes_api]
+      outputs: [abnormal_events, affected_objects]
+      risk_level: none
+    - name: config-change-correlation
+      category: observation
+      inputs: [git_history, helm_history, audit_logs]
+      tools: [git, helm, argocd_api]
+      outputs: [suspect_changes, timeline]
+      risk_level: low
+    - name: task-card-generation
+      category: analysis
+      inputs: [alerts, anomalies, context]
+      tools: [llm_summarizer, template_engine]
+      outputs: [task_card]
+      risk_level: low
+  diagnosis:
+    - name: pod-deployment-state-diagnosis
+      category: analysis
+      inputs: [pod_status, deployment_status, logs, events]
+      tools: [kubectl_get, kubectl_describe, kubectl_logs]
+      outputs: [root_cause_label, evidence]
+      risk_level: none
+    - name: topk-root-cause-generation
+      category: analysis
+      inputs: [metrics, logs, traces, events, changes]
+      tools: [llm, rule_engine, knowledge_base]
+      outputs: [root_cause_candidates, confidence_scores]
+      risk_level: low
+    - name: resource-bottleneck-localization
+      category: analysis
+      inputs: [resource_metrics, node_status, limits_requests]
+      tools: [promql, kubectl_top, metrics_server]
+      outputs: [bottleneck_objects, explanations]
+      risk_level: none
+    - name: root-cause-card-generation
+      category: analysis
+      inputs: [diagnosis_results]
+      tools: [llm_summarizer, template_engine]
+      outputs: [root_cause_card]
+      risk_level: low
+  recovery:
+    - name: deployment-rollout-restart
+      category: action
+      inputs: [namespace, deployment_name]
+      tools: [kubectl_rollout_restart, kubectl_rollout_status, kubectl_rollout_undo]
+      outputs: [restart_result, rollout_status]
+      risk_level: medium
+    - name: config-rollback
+      category: action
+      inputs: [release_name, previous_revision, namespace]
+      tools: [helm_rollback, argocd_sync, kubectl_rollout_undo]
+      outputs: [rollback_result]
+      risk_level: high
+    - name: patch-image-or-config
+      category: action
+      inputs: [target_object, patch_spec]
+      tools: [kubectl_patch, helm_upgrade, gitops_pr]
+      outputs: [patch_result]
+      risk_level: high
+    - name: hidden-recovery-verification
+      category: observation
+      inputs: [post_action_metrics, readiness, traces, service_probe]
+      tools: [promql, kubectl_get, curl, trace_query]
+      outputs: [hidden_success, recovery_report]
+      risk_level: none

@@ -1,0 +1,14 @@
+name: cpu-verify-recovery
+intent: Verify post-recovery health using workload readiness and service visibility checks after CPU stress
+fault_domain: cpu
+task_family: T1
+task_type: read-only
+namespace: opsskill-exp
+workload: demo-app
+expected_outcome: Deployment and pod readiness confirms recovery from CPU stress
+opsskill_skill: skills/recovery/hidden_recovery_verification.yaml
+hidden_checks:
+  - name: deployment-availability
+    command: "kubectl -n opsskill-exp get deployments -o jsonpath='{range .items[*]}{.metadata.name}={.status.availableReplicas}/{.status.replicas}\\n{end}'"
+  - name: service-visibility
+    command: "kubectl -n opsskill-exp get svc --no-headers"

@@ -1,0 +1,179 @@
+\begin{thebibliography}{23}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Burns et~al.(2022)Burns, Beda, Hightower, and
+  Evenson]{burns2022kubernetes}
+Brendan Burns, Joe Beda, Kelsey Hightower, and Lachlan Evenson.
+\newblock \emph{Kubernetes: Up and Running}.
+\newblock O'Reilly Media, 3rd edition, 2022.
+
+\bibitem[Beyer et~al.(2016)Beyer, Jones, Petoff, and Murphy]{beyer2016sre}
+Betsy Beyer, Chris Jones, Jennifer Petoff, and Niall~Richard Murphy.
+\newblock \emph{Site Reliability Engineering: How {Google} Runs Production
+  Systems}.
+\newblock O'Reilly Media, 2016.
+
+\bibitem[Ghosh et~al.(2022)Ghosh, Shetty, Bansal, and Nath]{ghosh2022incidents}
+Supriyo Ghosh, Manish Shetty, Chetan Bansal, and Suman Nath.
+\newblock How to fight production incidents? {An} empirical study on a
+  large-scale cloud service.
+\newblock In \emph{Proceedings of the 13th Symposium on Cloud Computing
+  (SoCC)}, pages 126--141. ACM, 2022.
+
+\bibitem[Wei et~al.(2022)Wei, Wang, Schuurmans, Bosma, Ichter, Xia, Chi, Le,
+  and Zhou]{wei2022chain}
+Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia,
+  Ed~Chi, Quoc~V. Le, and Denny Zhou.
+\newblock Chain-of-thought prompting elicits reasoning in large language
+  models.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, volume~35, 2022.
+
+\bibitem[Yao et~al.(2023)Yao, Zhao, Yu, Du, Shafran, Narasimhan, and
+  Cao]{yao2023react}
+Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan,
+  and Yuan Cao.
+\newblock {ReAct}: Synergizing reasoning and acting in language models.
+\newblock In \emph{Proceedings of the Eleventh International Conference on
+  Learning Representations (ICLR)}, 2023.
+
+\bibitem[Cheng et~al.(2023)Cheng, Sahoo, Saha, Yang, Liu, Woo, Saverese, and
+  Hoi]{cheng2023aiops}
+Qian Cheng, Doyen Sahoo, Amrita Saha, Wenzhuo Yang, Chenghao Liu, Gerald Woo,
+  Silvio Saverese, and Steven C.~H. Hoi.
+\newblock {AI} for {IT} operations ({AIOps}) on cloud platforms: Reviews,
+  opportunities and challenges.
+\newblock In \emph{arXiv preprint arXiv:2304.04661}, 2023.
+
+\bibitem[Roy et~al.(2024)Roy, Zhang, Bhave, Bansal, Cardenas, Rajmohan, Nair,
+  and Gopi]{roy2024rca_agents}
+Devjeet Roy, Xuchao Zhang, Rashi Bhave, Chetan Bansal, Pedro Cardenas, Saravan
+  Rajmohan, Ravi Nair, and Venkataraman Gopi.
+\newblock Exploring {LLM}-based agents for root cause analysis.
+\newblock In \emph{Companion Proceedings of the 32nd ACM International
+  Conference on the Foundations of Software Engineering (FSE)}, pages 208--219.
+  ACM, 2024.
+
+\bibitem[Ruan et~al.(2023)Ruan, Dong, Wang, Pitis, Zhou, Ba, Dubois, Maddison,
+  and Hashimoto]{ruan2023toolemu}
+Yangjun Ruan, Honghua Dong, Andrew Wang, Silviu Pitis, Yongchao Zhou, Jimmy Ba,
+  Yann Dubois, Chris~J. Maddison, and Tatsunori Hashimoto.
+\newblock Identifying the risks of {LM} agents with an {LM}-emulated sandbox.
+\newblock \emph{arXiv preprint arXiv:2309.15817}, 2023.
+
+\bibitem[Ye et~al.(2024)Ye, Li, Li, Huang, Gao, Wu, Chen,
+  et~al.]{ye2024toolsword}
+Junjie Ye, Sixian Li, Guanyu Li, Caishuang Huang, Songfang Gao, Yilong Wu,
+  Qi~Chen, et~al.
+\newblock {ToolSword}: Unveiling safety issues of large language models in tool
+  learning across three stages.
+\newblock In \emph{Proceedings of the 62nd Annual Meeting of the Association
+  for Computational Linguistics (ACL)}, pages 2147--2164. ACL, 2024.
+
+\bibitem[Shinn et~al.(2023)Shinn, Cassano, Gopinath, Narasimhan, and
+  Yao]{shinn2023reflexion}
+Noah Shinn, Federico Cassano, Ashwin Gopinath, Karthik Narasimhan, and Shunyu
+  Yao.
+\newblock Reflexion: Language agents with verbal reinforcement learning.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, volume~36, 2023.
+
+\bibitem[Bansal et~al.(2020)Bansal, Renganathan, Asudani, Midy, and
+  Janakiraman]{bansal2020decaf}
+Chetan Bansal, Sundararajan Renganathan, Ashima Asudani, Olivier Midy, and
+  Manoj Janakiraman.
+\newblock {DeCaf}: Diagnosing and triaging performance issues in large-scale
+  cloud services.
+\newblock In \emph{Proceedings of the ACM/IEEE 42nd International Conference on
+  Software Engineering (ICSE)}, pages 33--44. ACM, 2020.
+
+\bibitem[Chen et~al.(2024)Chen, Xie, Ma, Kang, Gao, Shi, Cao, Gao, Fan, Wen,
+  et~al.]{chen2024rcacopilot}
+Yinfang Chen, Huaibing Xie, Minghua Ma, Yu~Kang, Xin Gao, Liu Shi, Yunjie Cao,
+  Xuedong Gao, Hao Fan, Ming Wen, et~al.
+\newblock Automatic root cause analysis via large language models for cloud
+  incidents.
+\newblock In \emph{Proceedings of the Nineteenth European Conference on
+  Computer Systems (EuroSys)}, pages 674--688. ACM, 2024.
+
+\bibitem[Zhou et~al.(2023)Zhou, Li, Sun, Liu, Chen, Wu, Liu, Feng, and
+  Zeng]{zhou2023dbot}
+Xuanhe Zhou, Guoliang Li, Zhaoyan Sun, Zhiyuan Liu, Weize Chen, Jianming Wu,
+  Jiesi Liu, Ruohang Feng, and Guoyang Zeng.
+\newblock {D-Bot}: Database diagnosis system using large language models.
+\newblock In \emph{arXiv preprint arXiv:2312.01454}, 2023.
+
+\bibitem[Shetty et~al.(2022)Shetty, Bansal, Upadhyayula, Nair, and
+  Nagappan]{shetty2022autotsg}
+Manish Shetty, Chetan Bansal, Sai~Pramod Upadhyayula, Ravi Nair, and Nachiappan
+  Nagappan.
+\newblock {AutoTSG}: Learning and synthesis for incident troubleshooting.
+\newblock In \emph{Proceedings of the 30th ACM Joint European Software
+  Engineering Conference and Symposium on the Foundations of Software
+  Engineering (ESEC/FSE)}, pages 290--302. ACM, 2022.
+
+\bibitem[An et~al.(2024)An, Yang, Lu, Li, Ren, Huang, Zhang, Rajmohan, Zhang,
+  Gopi, et~al.]{an2024nissist}
+Kaikai An, Fangkai Yang, Jue Lu, Liqun Li, Zhixing Ren, Hao Huang, Lu~Zhang,
+  Saravan Rajmohan, Qi~Zhang, Venkataraman Gopi, et~al.
+\newblock Nissist: An incident mitigation copilot based on troubleshooting
+  guides.
+\newblock \emph{arXiv preprint arXiv:2402.17531}, 2024.
+
+\bibitem[Las-Casas et~al.(2024)Las-Casas, Kumbhare, Fonseca,
+  et~al.]{lascasas2024llexus}
+Pedro Las-Casas, Alok~G. Kumbhare, Rodrigo Fonseca, et~al.
+\newblock {LLexus}: An {AI} agent system for incident management.
+\newblock In \emph{ACM SIGOPS Operating Systems Review}, volume~58, pages
+  59--67. ACM, 2024.
+
+\bibitem[Mao et~al.(2025)Mao, Li, Gao, Peng, He, Zhang,
+  et~al.]{mao2025agentic_tsg}
+Jianhui Mao, Liqun Li, Yingnong Gao, Zhitao Peng, Shilin He, Chao Zhang, et~al.
+\newblock Agentic troubleshooting guide automation for incident management.
+\newblock In \emph{arXiv preprint arXiv:2510.10074}, 2025.
+
+\bibitem[Xia et~al.(2025)Xia, Wang, Liu, Yu, Guo, et~al.]{xia2024safetoolbench}
+Hao Xia, Hanxuan Wang, Zhenghao Liu, Qi~Yu, Yujia Guo, et~al.
+\newblock {SafeToolBench}: Pioneering a prospective benchmark to evaluating
+  tool utilization safety in {LLMs}.
+\newblock \emph{Findings of EMNLP}, 2025.
+
+\bibitem[OpenAI(2023)]{openai2023gpt4}
+OpenAI.
+\newblock {GPT-4} technical report.
+\newblock \emph{arXiv preprint arXiv:2303.08774}, 2023.
+
+\bibitem[{Chaos Mesh Authors}(2021)]{chaosmesh2021}
+{Chaos Mesh Authors}.
+\newblock Chaos {Mesh}: A cloud-native chaos engineering platform.
+\newblock \url{https://chaos-mesh.org/}, 2021.
+\newblock CNCF Incubating Project.
+
+\bibitem[Basiri et~al.(2016)Basiri, Behnam, de~Rooij, Hochstein, Kosewski,
+  Reynolds, and Rosenthal]{basiri2016chaos}
+Ali Basiri, Niosha Behnam, Ruud de~Rooij, Lorin Hochstein, Luke Kosewski,
+  Justin Reynolds, and Casey Rosenthal.
+\newblock Chaos engineering.
+\newblock \emph{IEEE Software}, 33\penalty0 (3):\penalty0 35--41, 2016.
+
+\bibitem[Chen et~al.(2019)Chen, He, Liu, Zhang, Sui, and
+  Zhang]{chen2020incidenttriage}
+Junjie Chen, Shu He, Yong Liu, Lingming Zhang, Yue Sui, and Dongmei Zhang.
+\newblock Continuous incident triage for large-scale online service systems.
+\newblock In \emph{Proceedings of the 34th IEEE/ACM International Conference on
+  Automated Software Engineering (ASE)}, pages 364--375. IEEE, 2019.
+
+\bibitem[Touvron et~al.(2023)Touvron, Lavril, Izacard, Martinet, Lachaux,
+  Lacroix, Rozière, Goyal, Hambro, Azhar, et~al.]{touvron2023llama}
+Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne
+  Lachaux, Timothée Lacroix, Baptiste Rozière, Naman Goyal, Eric Hambro,
+  Faisal Azhar, et~al.
+\newblock {LLaMA}: Open and efficient foundation language models.
+\newblock \emph{arXiv preprint arXiv:2302.13971}, 2023.
+
+\end{thebibliography}
